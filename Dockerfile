@@ -1,23 +1,22 @@
-FROM rust:1.77-slim
-
-# Install ALSA development libraries and other dependencies
-RUN apt-get update && apt-get install -y \
-    libasound2-dev \
-    pkg-config \
-    libwebkit2gtk-4.0-dev \
-    libssl-dev \
-    libgtk-3-dev \
-    libayatana-appindicator3-dev \
-    librsvg2-dev \
-    && rm -rf /var/lib/apt/lists/*
+FROM python:3.11-slim
 
 WORKDIR /app
 
-# Copy the entire project
-COPY . .
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
-# Build the meetily package
-RUN cargo build --release --package meetily
+# Copy backend requirements and install Python dependencies
+COPY backend/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Set the entrypoint
-CMD ["./target/release/meetily"]
+# Copy backend application code
+COPY backend/app ./app
+
+# Expose port
+EXPOSE 8000
+
+# Run the FastAPI application
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
