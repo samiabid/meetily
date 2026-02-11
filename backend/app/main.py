@@ -168,6 +168,22 @@ class SummaryProcessor:
 # Initialize processor
 processor = SummaryProcessor()
 
+# Root endpoint
+@app.get("/")
+async def root():
+    """Root endpoint - API information"""
+    return {
+        "name": "Meeting Summarizer API",
+        "version": "1.0.0",
+        "status": "running",
+        "docs": "/docs",
+        "endpoints": {
+            "meetings": "/get-meetings",
+            "transcript": "/process-transcript",
+            "config": "/get-model-config"
+        }
+    }
+
 # New meeting management endpoints
 @app.get("/get-meetings", response_model=List[MeetingResponse])
 async def get_meetings():
