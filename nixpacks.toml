@@ -1,5 +1,9 @@
 [phases.setup]
 nixPkgs = ["alsa-lib", "pkg-config"]
+aptPkgs = ["libasound2-dev", "pkg-config"]
+
+[phases.install]
+dependsOn = ["setup"]
 
 [phases.build]
-cmds = ["cargo build --release --package meetily"]
+dependsOn = ["install"]
