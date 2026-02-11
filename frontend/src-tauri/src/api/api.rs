@@ -17,8 +17,8 @@ use crate::{
     summary::CustomOpenAIConfig,
 };
 
-// Hardcoded server URL
-const APP_SERVER_URL: &str = "http://localhost:5167";
+// Backend server URL - Railway production (change to localhost:5167 for local development)
+const APP_SERVER_URL: &str = "https://meetily-production.up.railway.app";
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ApiResponse<T> {
