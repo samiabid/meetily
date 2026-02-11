@@ -1,0 +1,5 @@
+[phases.setup]
+nixPkgs = ["alsa-lib", "pkg-config"]
+
+[phases.build]
+cmds = ["cargo build --release --package meetily"]
