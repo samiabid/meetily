@@ -18,5 +18,5 @@ COPY backend/app/*.py ./
 # Expose port
 EXPOSE 8000
 
-# Run the FastAPI application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Run the FastAPI application (Railway provides PORT env variable)
+CMD uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}
